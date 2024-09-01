@@ -5,9 +5,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+  final MaterialColor colorThemes = Colors.red;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: colorThemes,
+        appBarTheme: AppBarTheme(
+          backgroundColor: colorThemes,
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: colorThemes,
+        ),
+      ),
       home: Main(),
     );
   }
@@ -25,8 +37,8 @@ class MainState extends State<Main> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Geral - Datas - Calculo notas - Faltas"),
-          backgroundColor: Colors.red),
+        title: Text("Geral - Datas - Calculo notas - Faltas"),
+      ),
       body: Center(
         child: Align(
           alignment: Alignment.topCenter,
