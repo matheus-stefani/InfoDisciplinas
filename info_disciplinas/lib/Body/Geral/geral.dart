@@ -52,6 +52,7 @@ class DivsGerais extends StatelessWidget {
                 child: Column(
                 children: [
                  TopDiv(),
+                 Container(height: 10),
                  BodyDiv(),
              ],
               ),
@@ -94,6 +95,8 @@ class BodyDiv extends StatelessWidget{
   Widget build(BuildContext context) {
     
     return  Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ColumnBodyDataDiv(),
                   SizedBox(width: 100), 
