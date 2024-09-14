@@ -5,30 +5,27 @@ import 'package:sqflite/sqflite.dart';
 
 class DisciplinasRepository extends ChangeNotifier {
   late Database db;
-
   List<InfosDisciplinas> _infosDisciplinas = [];
 
-  DisciplinasRepository(){
+  DisciplinasRepository() {
     _initDatabase();
   }
 
-  _initDatabase() async{
-    _getDisciplinas();
+  Future<void> _initDatabase() async {
+    db = await DB.instance.database;
+    await _getDisciplinas();
   }
 
-  _getDisciplinas() async{
-    db = await DB.instance.database;
-
-    List disciplinas = await db.query('DISCIPLINAS');
+  Future<void> _getDisciplinas() async {
+    List<Map<String, dynamic>> disciplinas = await db.query('DISCIPLINAS');
+    _infosDisciplinas = disciplinas.map((map) => InfosDisciplinas.fromMap(map)).toList();
     notifyListeners();
-    return disciplinas;
   }
 
-  _setDisciplinas (InfosDisciplinas disciplinas) async{
-    db = await DB.instance.database;
-    db.insert("DISCIPLINAS", {
-      'NOME' :disciplinas.nomeDisciplina,
-      'P1DATA': disciplinas.p1Data, 
+  Future<void> addDisciplinas(InfosDisciplinas disciplinas) async {
+    await db.insert("DISCIPLINAS", {
+      'NOME': disciplinas.nomeDisciplina,
+      'P1DATA': disciplinas.p1Data,
       'P2DATA': disciplinas.p2Data,
       'SUBDATA': disciplinas.subData,
       'TRAB1DATA': disciplinas.trab1Data,
@@ -42,11 +39,10 @@ class DisciplinasRepository extends ChangeNotifier {
       'SUBNOTA': disciplinas.subNota,
       'TRAB1NOTA': disciplinas.trab1Nota,
       'TRAB2NOTA': disciplinas.trab2Nota,
-      'TRAB3NOTA': disciplinas.trab3Data,
+      'TRAB3NOTA': disciplinas.trab3Nota,
     });
-    notifyListeners();
+    await _getDisciplinas(); // Atualiza a lista após a inserção
   }
 
+  List<InfosDisciplinas> get infosDisciplinas => _infosDisciplinas;
 }
-
-

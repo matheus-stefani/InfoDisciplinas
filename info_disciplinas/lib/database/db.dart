@@ -8,13 +8,14 @@ class DB {
 
   static Database? _database;
 
-  get database async {
+  Future<Database> get database async {
     if (_database != null) return _database!;
 
-    return await _initDatabase();
+    _database = await _initDatabase();
+    return _database!;
   }
 
-  _initDatabase() async {
+  Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'info_disciplinas.db');
     return await openDatabase(
       path,
@@ -23,8 +24,9 @@ class DB {
     );
   }
 
-  _onCreate(db, version) {
-    db.execute(_disciplinas);
+  void _onCreate(Database db, int version) async {
+    await db.execute(_disciplinas);
+    
   }
 
   String _disciplinas = '''
@@ -47,7 +49,5 @@ class DB {
     TRAB2NOTA REAL,
     TRAB3NOTA REAL
   );
-
   ''';
-  
 }
