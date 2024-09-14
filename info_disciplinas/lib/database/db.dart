@@ -45,8 +45,9 @@ class DB {
     SUBNOTA REAL,
     TRAB1NOTA REAL,
     TRAB2NOTA REAL,
-    TRAB3NOTA REAL,
+    TRAB3NOTA REAL
   );
 
   ''';
+  
 }
